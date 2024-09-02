@@ -17,7 +17,9 @@ import { CommonModule } from '@angular/common';
 })
 export class AddProductComponent {
   productForm: FormGroup;
+  categoryForm: FormGroup;
   categories: string[];
+  showAddCategoryModal = false;
 
   constructor(private fb: FormBuilder, private productService: ProductService) {
     this.categories = this.productService.getCategories();
@@ -31,6 +33,41 @@ export class AddProductComponent {
       createDate: ['', Validators.required],
       newCategory: [''],
     });
+
+    this.categoryForm = this.fb.group({
+      newCategory: ['', Validators.required],
+    });
+
+    this.loadCategories();
+  }
+
+  loadCategories() {
+    const savedCategories = localStorage.getItem('categories');
+    if (savedCategories) {
+      this.categories = JSON.parse(savedCategories);
+    } else {
+      // Add some default categories
+      this.categories = this.productService.getCategories();
+      localStorage.setItem('categories', JSON.stringify(this.categories));
+    }
+  }
+
+  openAddCategoryModal() {
+    this.showAddCategoryModal = true;
+  }
+
+  closeAddCategoryModal() {
+    this.showAddCategoryModal = false;
+  }
+
+  addCategory() {
+    if (this.categoryForm.valid) {
+      const newCategory = this.categoryForm.get('newCategory')?.value;
+      this.categories.push(newCategory);
+      localStorage.setItem('categories', JSON.stringify(this.categories));
+      this.closeAddCategoryModal();
+      this.categoryForm.reset();
+    }
   }
 
   onSubmit(): void {

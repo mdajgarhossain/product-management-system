@@ -22,13 +22,22 @@
     </div>
 
     <div class="form-group">
-      <label for="category">Category<span class="required">*</span></label>
-      <select id="category" formControlName="category">
-        <option value="">Select a category</option>
-        <option *ngFor="let category of categories" [value]="category">
-          {{ category }}
-        </option>
-      </select>
+      <label for="category">Category <span class="required">*</span></label>
+      <div class="category-container">
+        <select id="category" formControlName="category">
+          <option value="">Select a category</option>
+          <option *ngFor="let category of categories" [value]="category">
+            {{ category }}
+          </option>
+        </select>
+        <button
+          type="button"
+          class="add-category-btn"
+          (click)="openAddCategoryModal()"
+        >
+          +
+        </button>
+      </div>
       <div
         *ngIf="
           productForm.get('category')?.invalid &&
@@ -83,4 +92,32 @@
       </button>
     </div>
   </form>
+
+  <!-- Add Category Modal -->
+  <div class="modal" [class.show]="showAddCategoryModal">
+    <div class="modal-content">
+      <h3>Add New Category</h3>
+      <form [formGroup]="categoryForm" (ngSubmit)="addCategory()">
+        <div class="form-group">
+          <label for="newCategory">Category Name</label>
+          <input id="newCategory" formControlName="newCategory" type="text" />
+          <div
+            *ngIf="
+              categoryForm.get('newCategory')?.invalid &&
+              categoryForm.get('newCategory')?.touched
+            "
+            class="error"
+          >
+            Category name is required.
+          </div>
+        </div>
+        <div class="form-actions">
+          <button type="button" (click)="closeAddCategoryModal()">
+            Cancel
+          </button>
+          <button type="submit" [disabled]="categoryForm.invalid">Save</button>
+        </div>
+      </form>
+    </div>
+  </div>
 </div>

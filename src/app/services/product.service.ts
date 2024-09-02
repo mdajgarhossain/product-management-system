@@ -12,16 +12,11 @@ export interface Product {
 }
 
 @Injectable({
-  providedIn: 'root',
+  providedIn: 'root'
 })
 export class ProductService {
   private products: Product[] = [];
-  private categories: string[] = [
-    'Electronics',
-    'Apparel',
-    'Beauty Products',
-    'Home Decor',
-  ];
+  private categories: string[] = ['Electronics', 'Apparel', 'Beauty Products', 'Home Decor'];
   // private productCategories = {"electronics": 0, "apparel": 0, "beautyProducts": 0, "homeDecor": 0};
 
   constructor() {
