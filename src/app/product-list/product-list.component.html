@@ -1,1 +1,75 @@
-<p>product-list works!</p>
+<div class="product-list-container">
+  <div class="header-actions">
+    <button mat-raised-button color="primary" (click)="createProduct()">
+       Create Product
+    </button>
+  </div>
+
+  <!-- Search Field -->
+  <!-- <mat-form-field appearance="fill" class="search-field">
+    <mat-label>Search Products</mat-label>
+    <input matInput (input)="applyFilter($event.target?.value ?? '')" placeholder="Search by name">
+  </mat-form-field> -->
+
+  <!-- <mat-form-field appearance="fill" class="search-field">
+    <mat-label>Search Products</mat-label>
+    <input matInput (input)="applyFilter($event)" placeholder="Search by name">
+  </mat-form-field> -->
+
+  <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+    <ng-container matColumnDef="productName">
+      <th mat-header-cell *matHeaderCellDef>Name</th>
+      <td mat-cell *matCellDef="let element">{{ element.name }}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="category">
+      <th mat-header-cell *matHeaderCellDef>Category</th>
+      <td mat-cell *matCellDef="let element">{{ element.category }}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="quantity">
+      <th mat-header-cell *matHeaderCellDef>Quantity</th>
+      <td mat-cell *matCellDef="let element">{{ element.quantity }}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="price">
+      <th mat-header-cell *matHeaderCellDef>Unit Price</th>
+      <td mat-cell *matCellDef="let element">{{ element.price | currency }}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="total">
+      <th mat-header-cell *matHeaderCellDef>Total</th>
+      <td mat-cell *matCellDef="let element">
+        {{ element.quantity * element.price | currency }}
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="actions">
+      <th mat-header-cell *matHeaderCellDef>Actions</th>
+      <td mat-cell *matCellDef="let element">
+        <button mat-icon-button color="primary" (click)="editProduct(element)">
+          <mat-icon>edit</mat-icon>
+        </button>
+        <button mat-icon-button color="warn" (click)="deleteProduct(element)">
+          <mat-icon>delete</mat-icon>
+        </button>
+      </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+  </table>
+
+  <div class="pagination-container">
+    <mat-paginator
+      [pageSize]="pageSize"
+      [pageSizeOptions]="[10, 20, 30]"
+      showFirstLastButtons
+    ></mat-paginator>
+  </div>
+
+  <div class="total-price-container">
+    <span class="total-price-label">Total Price:</span>
+    <span class="total-price-value">{{ totalSum | currency }}</span>
+  </div>
+</div>

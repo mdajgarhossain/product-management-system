@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import {
   FormBuilder,
   FormGroup,
@@ -7,11 +7,27 @@ import {
 } from '@angular/forms';
 import { Product, ProductService } from '../services/product.service';
 import { CommonModule } from '@angular/common';
+import {
+  MAT_DIALOG_DATA,
+  MatDialog,
+  MatDialogActions,
+  MatDialogClose,
+  MatDialogContent,
+  MatDialogRef,
+  MatDialogTitle,
+} from '@angular/material/dialog';
 
 @Component({
   selector: 'app-add-product',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule],
+  imports: [
+    CommonModule,
+    ReactiveFormsModule,
+    MatDialogTitle,
+    MatDialogContent,
+    MatDialogActions,
+    MatDialogClose,
+  ],
   templateUrl: './add-product.component.html',
   styleUrl: './add-product.component.scss',
 })
@@ -20,19 +36,40 @@ export class AddProductComponent {
   categoryForm: FormGroup;
   categories: string[];
   showAddCategoryModal = false;
+  readonly dialogRef = inject(MatDialogRef<AddProductComponent>);
+  readonly data = inject<any>(MAT_DIALOG_DATA);
 
   constructor(private fb: FormBuilder, private productService: ProductService) {
     this.categories = this.productService.getCategories();
-    this.productForm = this.fb.group({
-      name: ['', Validators.required],
-      category: ['', Validators.required],
-      price: [0, [Validators.required, Validators.min(0.01)]],
-      description: [''],
-      image: [''],
-      quantity: [1, [Validators.required, Validators.min(1)]],
-      createDate: ['', Validators.required],
-      newCategory: [''],
-    });
+    if (this.data.isCreate) {
+      this.productForm = this.fb.group({
+        name: ['', Validators.required],
+        category: ['', Validators.required],
+        price: [0, [Validators.required, Validators.min(0.01)]],
+        description: [''],
+        image: [''],
+        quantity: [1, [Validators.required, Validators.min(1)]],
+        createDate: ['', Validators.required],
+        newCategory: [''],
+      });
+    } else {
+      this.productForm = this.fb.group({
+        name: [this.data.product.name, Validators.required],
+        category: [this.data.product.category, Validators.required],
+        price: [
+          this.data.product.price,
+          [Validators.required, Validators.min(0.01)],
+        ],
+        description: [this.data.product.description],
+        image: [''],
+        quantity: [
+          this.data.product.quantity,
+          [Validators.required, Validators.min(1)],
+        ],
+        createDate: [this.data.product.createDate, Validators.required],
+        newCategory: [''],
+      });
+    }
 
     this.categoryForm = this.fb.group({
       newCategory: ['', Validators.required],
@@ -72,7 +109,7 @@ export class AddProductComponent {
 
   onSubmit(): void {
     const newProduct: Product = {
-      id: Date.now(),
+      id: this.data.isCreate ? Date.now() : this.data.product.id,
       name: this.productForm.value.name,
       category: this.productForm.value.category,
       price: this.productForm.value.price,
@@ -92,7 +129,12 @@ export class AddProductComponent {
       return;
     }
 
-    this.productService.addProduct(newProduct);
-    this.productForm.reset();
+    if (this.data.isCreate) {
+      this.productService.addProduct(newProduct);
+      this.productForm.reset();
+    } else {
+      this.productService.updateProduct(newProduct);
+      this.dialogRef.close();
+    }
   }
 }

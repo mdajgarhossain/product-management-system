@@ -12,11 +12,16 @@ export interface Product {
 }
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class ProductService {
   private products: Product[] = [];
-  private categories: string[] = ['Electronics', 'Apparel', 'Beauty Products', 'Home Decor'];
+  private categories: string[] = [
+    'Electronics',
+    'Apparel',
+    'Beauty Products',
+    'Home Decor',
+  ];
   // private productCategories = {"electronics": 0, "apparel": 0, "beautyProducts": 0, "homeDecor": 0};
 
   constructor() {
@@ -31,11 +36,18 @@ export class ProductService {
   }
 
   addProduct(product: Product): void {
-    this.products.push(product);
+    this.products.unshift(product);
     // this.productCategories[product.category] = 1;
     this.saveProducts();
   }
 
+  updateProduct(updatedProduct: Product): void {
+    const index = this.products.findIndex((p) => p.id === updatedProduct.id);
+    if (index !== -1) {
+      this.products[index] = updatedProduct;
+      this.saveProducts();
+    }
+  }
 
   getCategories(): string[] {
     return this.categories;

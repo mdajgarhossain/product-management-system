@@ -1,5 +1,5 @@
 <div class="form-container">
-  <h2>Add New Product</h2>
+  <h2>{{data.isCreate ? 'Create New Product' : 'Edit Product'}}</h2>
 
   <div class="form-note">
     <p>
@@ -88,7 +88,7 @@
 
     <div class="form-actions">
       <button type="submit" [disabled]="productForm.invalid">
-        Add Product
+        {{data.isCreate ? 'Create Product' : 'Edit Product'}}
       </button>
     </div>
   </form>
