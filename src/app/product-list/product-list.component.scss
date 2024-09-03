@@ -7,10 +7,15 @@ $input-padding: 0.75rem;
   max-width: 1200px;
   margin: 0 auto;
 
+  .list-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
   .header-actions {
     display: flex;
     justify-content: flex-end;
-    margin-bottom: 1rem;
 
     button {
       padding: $input-padding 2rem;
@@ -29,7 +34,7 @@ $input-padding: 0.75rem;
 
   .search-field {
     width: 300px;
-    margin-bottom: 1rem;
+    // margin-bottom: 1rem;
   }
 
   table {

@@ -5,6 +5,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { MatIconModule } from '@angular/material/icon';
+import { MatInputModule } from '@angular/material/input';
 import {
   MAT_DIALOG_DATA,
   MatDialog,
@@ -24,6 +25,7 @@ import { AddProductComponent } from '../add-product/add-product.component';
     MatTableModule,
     MatPaginatorModule,
     MatIconModule,
+    MatInputModule,
   ],
   templateUrl: './product-list.component.html',
   styleUrl: './product-list.component.scss',
@@ -61,14 +63,10 @@ export class ProductListComponent implements OnInit {
     }
   }
 
-  applyFilter(filterValue: string) {
+  applyFilter(event: any) {
+    const filterValue = (event.target as HTMLInputElement).value;
     this.dataSource.filter = filterValue.trim().toLowerCase();
   }
-
-  // applyFilter(event: Event) {
-  //   const filterValue = (event.target as HTMLInputElement).value;
-  //   this.dataSource.filter = JSON.stringify(filterValue.trim().toLowerCase());
-  // }
 
   calculateTotalSum(products: Product[]) {
     this.totalSum = products.reduce(

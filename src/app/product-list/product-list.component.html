@@ -1,20 +1,17 @@
 <div class="product-list-container">
-  <div class="header-actions">
-    <button mat-raised-button color="primary" (click)="createProduct()">
-       Create Product
-    </button>
+  <div class="list-header">
+    <div>
+      <mat-form-field appearance="fill" class="search-field">
+        <mat-label>Search Products</mat-label>
+        <input matInput (input)="applyFilter($event)" placeholder="Search by name">
+      </mat-form-field>
+    </div>
+    <div class="header-actions">
+      <button mat-raised-button color="primary" (click)="createProduct()">
+         Create Product
+      </button>
+    </div>
   </div>
-
-  <!-- Search Field -->
-  <!-- <mat-form-field appearance="fill" class="search-field">
-    <mat-label>Search Products</mat-label>
-    <input matInput (input)="applyFilter($event.target?.value ?? '')" placeholder="Search by name">
-  </mat-form-field> -->
-
-  <!-- <mat-form-field appearance="fill" class="search-field">
-    <mat-label>Search Products</mat-label>
-    <input matInput (input)="applyFilter($event)" placeholder="Search by name">
-  </mat-form-field> -->
 
   <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
     <ng-container matColumnDef="productName">
