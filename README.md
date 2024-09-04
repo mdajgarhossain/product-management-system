@@ -12,7 +12,7 @@
 1. Open your terminal or command prompt.
 2. Clone the repository from GitHub:
    ```bash
-   git clone [https://github.com/mdajgarhossain/product-management-system.git]
+   git clone https://github.com/mdajgarhossain/product-management-system.git
 3. Change the directory to the project folder:
    ```bash
    cd product-management-system
