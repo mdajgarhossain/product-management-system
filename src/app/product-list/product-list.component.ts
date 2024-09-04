@@ -16,6 +16,7 @@ import {
   MatDialogTitle,
 } from '@angular/material/dialog';
 import { AddProductComponent } from '../add-product/add-product.component';
+import { WarnPopupComponent } from '../popups/warn-popup/warn-popup.component';
 @Component({
   selector: 'app-product-list',
   standalone: true,
@@ -100,13 +101,31 @@ export class ProductListComponent implements OnInit {
   }
 
   deleteProduct(product: Product) {
-    const index = this.dataSource.data.indexOf(product);
-    if (index >= 0) {
-      this.dataSource.data.splice(index, 1);
-      this.dataSource.data = [...this.dataSource.data];
-      localStorage.setItem('products', JSON.stringify(this.dataSource.data));
-      this.calculateTotalSum(this.dataSource.data);
-    }
+    this.openPopup(product);
+  }
+
+  openPopup(product: any) {
+    const dialogRef = this.dialog.open(WarnPopupComponent, {
+      data: { message: 'Are you sure to delete?', delete: true },
+      width: '600px',
+      height: '150px',
+    });
+
+    dialogRef.afterClosed().subscribe((result) => {
+      if (result) {
+        const index = this.dataSource.data.indexOf(product);
+        if (index >= 0) {
+          this.dataSource.data.splice(index, 1);
+          this.dataSource.data = [...this.dataSource.data];
+          localStorage.setItem(
+            'products',
+            JSON.stringify(this.dataSource.data)
+          );
+          this.calculateTotalSum(this.dataSource.data);
+        }
+        this.loadProducts();
+      }
+    });
   }
 }
 

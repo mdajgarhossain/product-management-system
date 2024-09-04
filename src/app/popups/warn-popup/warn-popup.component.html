@@ -1,0 +1,32 @@
+<ng-container *ngIf="!data?.delete">
+  <div class="warning-message-container">
+    <p class="warning-message">
+      {{ data.message }}
+    </p>
+  </div>
+</ng-container>
+
+<ng-container *ngIf="data?.delete">
+  <mat-dialog-content class="warning-dialog-content">
+    <p class="warning-text">{{ data.message }}</p>
+  </mat-dialog-content>
+  <mat-dialog-actions class="warning-dialog-actions">
+    <button
+      mat-raised-button
+      color="warn"
+      (click)="onDialogClose()"
+      class="warning-button"
+    >
+      No
+    </button>
+    <button
+      mat-raised-button
+      color="primary"
+      [mat-dialog-close]="true"
+      cdkFocusInitial
+      class="primary-button"
+    >
+      Yes
+    </button>
+  </mat-dialog-actions>
+</ng-container>

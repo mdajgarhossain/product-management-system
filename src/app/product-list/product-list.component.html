@@ -3,12 +3,16 @@
     <div>
       <mat-form-field appearance="fill" class="search-field">
         <mat-label>Search Products</mat-label>
-        <input matInput (input)="applyFilter($event)" placeholder="Search by name">
+        <input
+          matInput
+          (input)="applyFilter($event)"
+          placeholder="Search by name"
+        />
       </mat-form-field>
     </div>
     <div class="header-actions">
       <button mat-raised-button color="primary" (click)="createProduct()">
-         Create Product
+        Create Product
       </button>
     </div>
   </div>

@@ -1,5 +1,5 @@
 <div class="form-container">
-  <h2>{{data.isCreate ? 'Create New Product' : 'Edit Product'}}</h2>
+  <h2>{{ data.isCreate ? "Create New Product" : "Edit Product" }}</h2>
 
   <div class="form-note">
     <p>
@@ -24,7 +24,11 @@
     <div class="form-group">
       <label for="category">Category <span class="required">*</span></label>
       <div class="category-container">
-        <select id="category" formControlName="category">
+        <select
+          (change)="onCategoryChange($event)"
+          id="category"
+          formControlName="category"
+        >
           <option value="">Select a category</option>
           <option *ngFor="let category of categories" [value]="category">
             {{ category }}
@@ -87,8 +91,11 @@
     </div>
 
     <div class="form-actions">
-      <button type="submit" [disabled]="productForm.invalid">
-        {{data.isCreate ? 'Create Product' : 'Edit Product'}}
+      <button
+        type="submit"
+        [disabled]="productForm.invalid || categoryLimitExceeded"
+      >
+        {{ data.isCreate ? "Create Product" : "Edit Product" }}
       </button>
     </div>
   </form>

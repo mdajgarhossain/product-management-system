@@ -1,0 +1,72 @@
+.warning-message-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background-color: #fff4e5;
+}
+
+.warning-message {
+  font-size: 1.5rem;
+  color: #856404;
+  background-color: #fff3cd;
+  padding: 20px 40px;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  font-weight: bold;
+  text-align: center;
+}
+
+.warning-dialog-content {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 150px;
+  text-align: center;
+  background-color: #fff3cd;
+  border-radius: 8px;
+}
+
+.warning-text {
+  font-size: 1.5rem;
+  color: #856404;
+  margin: 0;
+  font-weight: bold;
+}
+
+.warning-dialog-actions {
+  display: flex;
+  justify-content: center;
+  padding: 20px 0;
+  background-color: #fff3cd;
+  border-radius: 8px;
+}
+
+.warning-button, .primary-button {
+  padding: 10px 20px;
+  font-size: 1rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  border-radius: 4px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  margin: 0 8px; 
+}
+
+.warning-button {
+  background-color: #ff7043; 
+  color: white;
+}
+
+.warning-button:hover {
+  background-color: #e64a19;
+}
+
+.primary-button {
+  background-color: #1976d2;
+  color: white;
+}
+
+.primary-button:hover {
+  background-color: #1565c0;
+}
+

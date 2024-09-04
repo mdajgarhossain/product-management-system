@@ -16,6 +16,8 @@ import {
   MatDialogRef,
   MatDialogTitle,
 } from '@angular/material/dialog';
+import { SuccessPopupComponent } from '../popups/success-popup/success-popup.component';
+import { WarnPopupComponent } from '../popups/warn-popup/warn-popup.component';
 
 @Component({
   selector: 'app-add-product',
@@ -38,6 +40,8 @@ export class AddProductComponent {
   showAddCategoryModal = false;
   readonly dialogRef = inject(MatDialogRef<AddProductComponent>);
   readonly data = inject<any>(MAT_DIALOG_DATA);
+  readonly dialog = inject(MatDialog);
+  categoryLimitExceeded: boolean = false;
 
   constructor(private fb: FormBuilder, private productService: ProductService) {
     this.categories = this.productService.getCategories();
@@ -119,22 +123,39 @@ export class AddProductComponent {
       createDate: this.productForm.value.createDate,
     };
 
-    const existingProducts = this.productService.getProducts();
-    const productCountInCategory = existingProducts.filter(
-      (p) => p.category === newProduct.category
-    ).length;
-
-    if (productCountInCategory >= 10) {
-      alert('Cannot add more than 10 products in the same category.');
-      return;
-    }
-
     if (this.data.isCreate) {
       this.productService.addProduct(newProduct);
+      this.openPopup('Product added successfully!', SuccessPopupComponent);
       this.productForm.reset();
     } else {
       this.productService.updateProduct(newProduct);
+      this.openPopup('Product updated successfully!', SuccessPopupComponent);
       this.dialogRef.close();
+    }
+  }
+
+  openPopup(message: string, componentName: any) {
+    this.dialog.open(componentName, {
+      data: { message },
+      width: '600px',
+      height: '150px',
+    });
+  }
+
+  onCategoryChange(event: any) {
+    const existingProducts = this.productService.getProducts();
+    const productCountInCategory = existingProducts.filter(
+      (p) => p.category === event.target.value
+    ).length;
+
+    if (productCountInCategory >= 10) {
+      this.categoryLimitExceeded = true;
+      this.openPopup(
+        'Cannot add more than 10 products of the same category.',
+        WarnPopupComponent
+      );
+    } else {
+      this.categoryLimitExceeded = false;
     }
   }
 }
