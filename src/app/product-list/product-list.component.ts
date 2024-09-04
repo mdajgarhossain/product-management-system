@@ -41,7 +41,7 @@ export class ProductListComponent implements OnInit {
     'actions',
   ];
   dataSource = new MatTableDataSource<Product>([]);
-  pageSize = 10;
+  pageSize = 50;
   totalSum = 0;
   readonly dialog = inject(MatDialog);
 

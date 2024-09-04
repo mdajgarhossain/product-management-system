@@ -61,16 +61,19 @@
     <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
   </table>
 
-  <div class="pagination-container">
-    <mat-paginator
-      [pageSize]="pageSize"
-      [pageSizeOptions]="[10, 20, 30]"
-      showFirstLastButtons
-    ></mat-paginator>
+  <div *ngIf="!dataSource.data.length" class="no-products">
+    No products available
   </div>
 
-  <div class="total-price-container">
-    <span class="total-price-label">Total Price:</span>
-    <span class="total-price-value">{{ totalSum | currency }}</span>
+  <div class="pagination-container">
+    <div class="total-price-container">
+      <span class="total-price-label">Total Price:</span>
+      <span class="total-price-value">{{ totalSum | currency }}</span>
+    </div>
+    <mat-paginator
+      [length]="dataSource.data.length"
+      [pageSize]="pageSize"
+      showFirstLastButtons
+    ></mat-paginator>
   </div>
 </div>

@@ -52,11 +52,22 @@ $input-padding: 0.75rem;
     .mat-icon-button {
       margin-right: 0.5rem;
     }
+
+    .mat-icon {
+      cursor: pointer;
+    }
+  }
+
+  .no-products {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100px;
   }
 
   .pagination-container {
     display: flex;
-    justify-content: flex-end;
+    justify-content: space-between;
     margin-top: 1rem;
   }
 
