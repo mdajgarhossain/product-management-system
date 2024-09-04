@@ -17,6 +17,7 @@ import {
 } from '@angular/material/dialog';
 import { AddProductComponent } from '../add-product/add-product.component';
 import { WarnPopupComponent } from '../popups/warn-popup/warn-popup.component';
+import {MatToolbarModule} from '@angular/material/toolbar';
 @Component({
   selector: 'app-product-list',
   standalone: true,
@@ -27,6 +28,7 @@ import { WarnPopupComponent } from '../popups/warn-popup/warn-popup.component';
     MatPaginatorModule,
     MatIconModule,
     MatInputModule,
+    MatToolbarModule,
   ],
   templateUrl: './product-list.component.html',
   styleUrl: './product-list.component.scss',
